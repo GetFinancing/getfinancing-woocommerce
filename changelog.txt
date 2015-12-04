@@ -1,0 +1,13 @@
+Get Financing
+Author: Get Financing
+
+-----------------------------------------
+Change history for Get Financing woocommerce module
+-----------------------------------------
+
+VERSION 1.0.1 (04-12-2015)
+ * ADD: changelog.txt
+ * Fix callback hook call
+
+VERSION 1.0.0
+ * Original release

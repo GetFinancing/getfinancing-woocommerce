@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @class       WC_GetFinancing
  * @extends     WC_Payment_Gateway
  * @since       2.2.0
- * @version     1.0.0
+ * @version     1.0.1
  * @author      GetFinancing - @sortegam contributor
  */
 class WC_GetFinancing extends WC_Payment_Gateway {
@@ -43,10 +43,10 @@ class WC_GetFinancing extends WC_Payment_Gateway {
         $this->password          = $this->get_option( 'password' );
         $this->redirectok        = $this->get_option( 'redirectok' );
         $this->redirectko        = $this->get_option( 'redirectko' );
-        $this->gateway_url_prod  = "https://api.getfinancing.com:10000";
-        $this->gateway_url_stage = "https://api-test.getfinancing.com:10001";
-        $this->min_order_amount  = 100;
-        $this->max_order_amount  = 35000;
+        $this->gateway_url_prod  = "https://api.getfinancing.com";
+        $this->gateway_url_stage = "https://api-test.getfinancing.com";
+        $this->min_order_amount  = 1;
+        $this->max_order_amount  = 100000;
 
         $this->_postback_url = str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_GetFinancing', home_url( '/' ) ) );
 
@@ -54,7 +54,8 @@ class WC_GetFinancing extends WC_Payment_Gateway {
         add_action( 'wp_enqueue_scripts', array( $this, 'getfinancing_js_lib' ) );
         add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
         add_action( 'woocommerce_receipt_' . $this->id, array( &$this, 'receipt_page' ) );
-        add_action( 'woocommerce_api_wc_pagantis', array( $this, 'check_pagantis_response' ) );
+        //add_action( 'woocommerce_api_wc_pagantis', array( $this, 'check_pagantis_response' ) );
+        add_action( 'woocommerce_api_wc_getfinancing', array( $this, 'check_postback_response' ) );
     }
 
 
