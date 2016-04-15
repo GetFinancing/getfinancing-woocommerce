@@ -206,7 +206,7 @@ class WC_GetFinancing extends WC_Payment_Gateway {
             return;
         }
 
-        wp_enqueue_script( 'getfinancing', 'https://partner.getfinancing.com/libs/1.0/getfinancing.js', array( 'jquery' ), WC_VERSION, true );
+        wp_enqueue_script( 'getfinancing', 'https://cdn.getfinancing.com/libs/1.0/getfinancing.js', array( 'jquery' ), WC_VERSION, true );
        
     }
 
