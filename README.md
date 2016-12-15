@@ -1,15 +1,10 @@
-=== WooCommerce GetFinancing ===
-Contributors: @sortegam
-Tags: WooCommerce, Payment Gateways, GetFinancing, Financing, Get Financing
-Requires at least: 3.0.
-Tested up to: 3.5.2
-Stable tag: 2.0.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+# WooCommerce GetFinancing
 
-This plugin just add GetFinancing Payment Gateway for WooCommerce. 
+This plugin just add GetFinancing Payment Gateway for WooCommerce.
 
-== Description ==
+## Description
+
+
 This plugin just integrates Getfinancing Payment Gateways for WooCommerce.
 
 1. Create your merchant account to offer monthly payment options to your consumers directly on your ecommerce from here (http://www.getfinancing.com/signup) if you haven't done it yet.
@@ -18,29 +13,29 @@ This plugin just integrates Getfinancing Payment Gateways for WooCommerce.
 4. Once the module is working properly and the lightbox opens on the request, we suggest you to add some conversion tools to your store so your users know before the payment page that they can pay monthly for the purchases at your site. You can find these copy&paste tools under your account inside the Integration section.
 5. Check our documentation (www.getfinancing.com/docs) or send us an email at (integrations@getfinancing.com) if you have any doubt or suggestions for this module. You can also send pull requests to our GitHub account (http://www.github.com/GetFinancing) if you feel you made an improvement to this module.
 
-= More =
+## More
 * Thank you for using our plugin.
 * Vist the [GetFinancing](http://www.getfinancing.com) to know more.
 
-== Installation ==
+## Installation
 
 1. Install / upload and activate the plugin.
 2. Configure the plugin with your parameters under plugin settings.
 3. Enjoy.
 
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions
 
 Please [contact with us directly](http://www.getfinancing.com) if you have any problem to install or use the plugin.
 
 
-== Changelog ==
+## Changelog
 
-= 1.0.0 =
+### 1.2.0
+* Add security filters
+
+### 1.1.0
+* Minor bug solving
+
+### 1.0.0
 * Initial Release
-
-
-== Upgrade Notice ==
-
-= 1.0.0 =
-This version was tested with WooCommerce 2.3.10 and WordPress 4.2.2
