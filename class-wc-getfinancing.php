@@ -225,6 +225,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
 
         // fill in the product cart inside the product_info parameter
         $products = $order->get_items();
+        $product_info = "";
         foreach ($products as $product)
         {
             $product_info = $product_info.$product['name'].",";
