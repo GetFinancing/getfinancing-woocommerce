@@ -51,7 +51,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
         // add table with merch id <-> order id reference
         register_activation_hook(__FILE__, array($this, 'create_gf_table'));
         //hook not being called, invoking function manually
-        //$this->create_gf_table();
+        $this->create_gf_table();
         // Hooks
         add_action('wp_enqueue_scripts', array($this, 'getfinancing_js_lib'));
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
@@ -226,18 +226,28 @@ class WC_GetFinancing extends WC_Payment_Gateway
         // fill in the product cart inside the product_info parameter
         $products = $order->get_items();
         $product_info = "";
+	$cart_items = array();
         foreach ($products as $product)
         {
+            $cart_items[]=array('sku' => $product['name'],
+                                'display_name' => $product['name'],
+                                'unit_price' => number_format($product['line_total'], 2),
+                                'quantity' => $product['qty'],
+                                'unit_tax' => $product['line_tax']
+                                );
+
             $product_info = $product_info.$product['name'].",";
         }
 
         $this->ok_url = $this->get_return_url($order);
-        $this->ko_url = htmlspecialchars_decode(WC_Cart::get_checkout_url());
+	$wcCart = new WC_Cart();
+        $this->ko_url = htmlspecialchars_decode($wcCart->get_checkout_url());
         $this->callback_url =  esc_url(get_site_url() .'/index.php/wc-api/WC_GetFinancing/');
 
         $gf_data = array(
             'amount'           => $order->order_total,
-            'product_info'     => $product_info,
+            // 'product_info'     => $product_info, // In order to be able to use cart_items we need to remove this line
+            'cart_items'       => $cart_items,
             'first_name'       => $order->billing_first_name,
             'last_name'        => $order->billing_last_name,
             'shipping_address' => array(
@@ -306,7 +316,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
             return array('result' => 'fail', 'redirect' => '');
         }
 
-        if ((isset($response_body->href) == false) || (empty($response_body->href) == ture)) {
+        if ((isset($response_body->href) == false) || (empty($response_body->href) == true)) {
             wc_add_notice('GetFinancing cannot process your order. Please try again or select a different payment method.', 'error');
             return array('result' => 'fail', 'redirect' => '');
         }
@@ -334,7 +344,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
         WC()->session->getfinancing_process_url = $response_body->href;
 
         // Adds the token to the order.
-        update_post_meta($order->id, 'getfinancing_custid', $response_body->customer_id);
+        update_post_meta($order->id, 'getfinancing_custid', $response_body->inv_id);
 
 
         return array(
