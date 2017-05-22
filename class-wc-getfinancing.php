@@ -244,11 +244,16 @@ class WC_GetFinancing extends WC_Payment_Gateway
         $this->ko_url = htmlspecialchars_decode($wcCart->get_checkout_url());
         $this->callback_url =  esc_url(get_site_url() .'/index.php/wc-api/WC_GetFinancing/');
 
+
+        global $woocommerce;
+        $order = new WC_Order($order_id);
+
         $gf_data = array(
             'amount'           => $order->order_total,
             // 'product_info'     => $product_info, // In order to be able to use cart_items we need to remove this line
             'cart_items'       => $cart_items,
             'first_name'       => $order->billing_first_name,
+            'shipping_amount'  => $order->get_total_shipping(),
             'last_name'        => $order->billing_last_name,
             'shipping_address' => array(
                 'street1'  => $order->shipping_address_1 . " " . $order->shipping_address_2,
@@ -324,8 +329,6 @@ class WC_GetFinancing extends WC_Payment_Gateway
         // If we are here that means that the gateway give us a "created" status.
         // then we can create the order in hold status.
 
-        global $woocommerce;
-        $order = new WC_Order($order_id);
         //insert merchant_transaction_id <-> order_id relation
         $table_name = $wpdb->prefix . 'getfinancing';
         $wpdb->insert(
