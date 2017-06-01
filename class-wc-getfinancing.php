@@ -213,6 +213,18 @@ class WC_GetFinancing extends WC_Payment_Gateway
         wp_enqueue_script('getfinancing', 'https://cdn.getfinancing.com/libs/1.0/getfinancing.js', array('jquery'), WC_VERSION, true);
     }
 
+    public function getAddDisplayDetails ($product) {
+        $productDetails = '';
+        foreach ($product as $v) {
+            $key = substr($v->key, 0, 3);
+            if ($key == 'pa_') {
+                $productDetails.=($productDetails!='')?', ':'';
+                $productDetails.= substr ($v->key, 3).': '.$v->value;
+            }
+        }
+        return $productDetails;
+    }
+
     /**
      * Process the payment
      *
@@ -228,15 +240,20 @@ class WC_GetFinancing extends WC_Payment_Gateway
         $product_info = "";
 	$cart_items = array();
         foreach ($products as $product)
-        {
+        { 
+            $displayName = $product['name'];
+            $productOptions =  $this->getAddDisplayDetails ($product['item_meta_array']);
+            $displayName.= ($productOptions!='')?' ('.$productOptions.')':'';
+
             $cart_items[]=array('sku' => $product['name'],
-                                'display_name' => $product['name'],
+                                'display_name' => $displayName,
                                 'unit_price' => number_format($product['line_total'], 2),
                                 'quantity' => $product['qty'],
                                 'unit_tax' => $product['line_tax']
                                 );
 
             $product_info = $product_info.$product['name'].",";
+    
         }
 
         $this->ok_url = $this->get_return_url($order);
