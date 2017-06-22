@@ -431,7 +431,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
 
         //check if the order_id match with the merchant_transaction_id
         $table_name = $wpdb->prefix . "getfinancing";
-        $sql = sprintf("SELECT order_id FROM %s WHERE merchant_transaction_id = '%s'", $table_name, $merchant_transaction_id);
+        $sql = sprintf("SELECT order_id FROM %s WHERE order_id = '%s'", $table_name, $merchant_transaction_id);
         $row = $wpdb->get_row($sql);
         if ($row == null) {
             wp_die("merchant_transaction_id not present", "GetFinancing", array('response' => 200));
