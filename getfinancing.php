@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce GetFinancing Plugin
 Plugin URI: http://www.getfinancing.com
 Description: Add GetFinancing Payment Gateway for WooCommerce.
-Version: 1.0.0
+Version: 1.6.0
 Author: GetFinancing
 Author URI: http://www.getfinancing.com
 License: GPLv2
