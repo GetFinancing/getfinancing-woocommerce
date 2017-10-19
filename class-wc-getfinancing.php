@@ -238,7 +238,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
         // fill in the product cart inside the product_info parameter
         $products = $order->get_items();
         $product_info = "";
-	$cart_items = array();
+    $cart_items = array();
         foreach ($products as $product)
         { 
             $displayName = $product['name'];
@@ -247,7 +247,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
 
             $cart_items[]=array('sku' => $product['name'],
                                 'display_name' => $displayName,
-                                'unit_price' => number_format($product['line_total'], 2),
+                                'unit_price' => str_replace(",","",number_format($product['line_total'], 2)),
                                 'quantity' => $product['qty'],
                                 'unit_tax' => $product['line_tax']
                                 );
@@ -257,16 +257,15 @@ class WC_GetFinancing extends WC_Payment_Gateway
         }
 
         $this->ok_url = $this->get_return_url($order);
-	$wcCart = new WC_Cart();
+    $wcCart = new WC_Cart();
         $this->ko_url = htmlspecialchars_decode($wcCart->get_checkout_url());
         $this->callback_url =  esc_url(get_site_url() .'/index.php/wc-api/WC_GetFinancing/');
 
 
         global $woocommerce;
         $order = new WC_Order($order_id);
-
         $gf_data = array(
-            'amount'           => $order->order_total,
+            //'amount'           => $order->order_total,
             // 'product_info'     => $product_info, // In order to be able to use cart_items we need to remove this line
             'cart_items'       => $cart_items,
             'first_name'       => $order->billing_first_name,
@@ -275,7 +274,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
             'shipping_address' => array(
                 'street1'  => $order->shipping_address_1 . " " . $order->shipping_address_2,
                 'city'    => $order->shipping_city,
-                'state'   => $order->shipping_state,
+                'state'   => (trim($order->shipping_state)==''?$order->billing_state:$order->shipping_state),
                 'zipcode' => $order->shipping_postcode
             ),
             'billing_address' => array(
@@ -535,3 +534,4 @@ class WC_GetFinancing extends WC_Payment_Gateway
         }
     }
 }
+
