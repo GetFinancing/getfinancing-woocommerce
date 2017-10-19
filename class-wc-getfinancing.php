@@ -271,12 +271,6 @@ class WC_GetFinancing extends WC_Payment_Gateway
             'first_name'       => $order->billing_first_name,
             'shipping_amount'  => $order->get_total_shipping(),
             'last_name'        => $order->billing_last_name,
-            'shipping_address' => array(
-                'street1'  => $order->shipping_address_1 . " " . $order->shipping_address_2,
-                'city'    => $order->shipping_city,
-                'state'   => (trim($order->shipping_state)==''?$order->billing_state:$order->shipping_state),
-                'zipcode' => $order->shipping_postcode
-            ),
             'billing_address' => array(
                 'street1'  => $order->billing_address_1 . " " . $order->billing_address_2,
                 'city'    => $order->billing_city,
@@ -294,6 +288,13 @@ class WC_GetFinancing extends WC_Payment_Gateway
             'software_version' =>  'woocommerce '.WC_VERSION
         );
 
+        if (trim($order->shipping_state)!='') {
+            $gf_data['shipping_address'] = array(
+                'street1'  => $order->shipping_address_1 . " " . $order->shipping_address_2,
+                'city'    => $order->shipping_city,
+                'state'   => $order->shipping_state,
+                'zipcode' => $order->billing_postcode);
+        }
 
         $body_json_data = json_encode($gf_data);
         $header_auth = base64_encode($this->username . ":" . $this->password);
