@@ -265,7 +265,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
         global $woocommerce;
         $order = new WC_Order($order_id);
         $gf_data = array(
-            //'amount'           => $order->order_total,
+            'amount'           => $order->order_total,
             // 'product_info'     => $product_info, // In order to be able to use cart_items we need to remove this line
             'cart_items'       => $cart_items,
             'first_name'       => $order->billing_first_name,
