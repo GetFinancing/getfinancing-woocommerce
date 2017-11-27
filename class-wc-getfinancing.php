@@ -247,13 +247,13 @@ class WC_GetFinancing extends WC_Payment_Gateway
 
             $cart_items[]=array('sku' => $product['name'],
                                 'display_name' => $displayName,
-                                'unit_price' => str_replace(",","",number_format($product['line_total'], 2)),
+                                'unit_price' => str_replace(",","",number_format($product['line_total']/$product['qty'], 2)),
                                 'quantity' => $product['qty'],
                                 'unit_tax' => $product['line_tax']
                                 );
 
             $product_info = $product_info.$product['name'].",";
-    
+            
         }
 
         $this->ok_url = $this->get_return_url($order);
