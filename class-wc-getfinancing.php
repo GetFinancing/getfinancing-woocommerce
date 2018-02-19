@@ -451,25 +451,19 @@ class WC_GetFinancing extends WC_Payment_Gateway
             $new_state = $notification['updates']['status'];
 
             if ($new_state == "rejected") {
-                if ($order->status =='on-hold' || $order->status == 'pending') {
-                    $order->update_status('failed', 'Getfinancing rejected to finance this order.');
-                    $order->add_order_note('GGetfinancing rejected to finance this order.');
-                }
+                $order->update_status('failed', 'Getfinancing rejected to finance this order.');
+                $order->add_order_note('GGetfinancing rejected to finance this order.');
             }
 
             if ($new_state == "preapproved") {
-                if ($order->status =='on-hold' || $order->status == 'pending') {
-                    // Keep on hold by update with a message.
-                    $order->add_order_note('GetFinancing Pre-approved this order, please wait');
-                }
+                // Keep on hold by update with a message.
+                $order->add_order_note('GetFinancing Pre-approved this order, please wait');
             }
 
             if ($new_state == "approved") {
-                if ($order->status =='on-hold' || $order->status == 'pending') {
-                    $order->payment_complete();
-                    $order->add_order_note('GetFinancing Approved this order with request token: ' . $gf_token);
-                    $woocommerce->cart->empty_cart();
-                }
+                $order->payment_complete();
+                $order->add_order_note('GetFinancing Approved this order with request token: ' . $gf_token);
+                $woocommerce->cart->empty_cart();
             }
 
             wp_die("OK", "GetFinancing", array('response' => 200));
