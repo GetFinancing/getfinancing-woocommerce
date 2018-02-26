@@ -9,7 +9,7 @@ if (! defined('ABSPATH')) {
  * @class       WC_GetFinancing
  * @extends     WC_Payment_Gateway
  * @since       2.2.0
- * @version     1.2
+ * @version     1.5
  * @author      GetFinancing - @sortegam contributor
  */
 class WC_GetFinancing extends WC_Payment_Gateway
@@ -249,7 +249,7 @@ class WC_GetFinancing extends WC_Payment_Gateway
             if (trim($SKU) == '') {
                 $SKU = $product['name'];
             }
-            
+
             $cart_items[]=array('sku' => $SKU,
                                 'display_name' => $displayName,
                                 'unit_price' => str_replace(",","",number_format($product['line_total']/$product['qty'], 2)),
