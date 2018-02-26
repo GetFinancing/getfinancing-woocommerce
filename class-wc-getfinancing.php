@@ -244,8 +244,13 @@ class WC_GetFinancing extends WC_Payment_Gateway
             $displayName = $product['name'];
             $productOptions =  $this->getAddDisplayDetails ($product['item_meta_array']);
             $displayName.= ($productOptions!='')?' ('.$productOptions.')':'';
-
-            $cart_items[]=array('sku' => $product['name'],
+            $objProd = new WC_Product($product['product_id']);
+            $SKU = $objProd->get_sku();
+            if (trim($SKU) == '') {
+                $SKU = $product['name'];
+            }
+            
+            $cart_items[]=array('sku' => $SKU,
                                 'display_name' => $displayName,
                                 'unit_price' => str_replace(",","",number_format($product['line_total']/$product['qty'], 2)),
                                 'quantity' => $product['qty'],
